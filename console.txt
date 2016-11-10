@@ -1,0 +1,19 @@
+Choose (r)ock, (p)aper, or (s)cissors. (Or (q)uit to quit)
+r
+You played: Rock. Computer played: Paper. You lose!
+p
+You played: Paper. Computer played: Paper. Tie game!
+s
+You played: Scissors. Computer played: Scissors. Tie game!
+r
+You played: Rock. Computer played: Scissors. You win!
+s
+You played: Scissors. Computer played: Paper. You win!
+p
+You played: Paper. Computer played: Rock. You win!
+r
+You played: Rock. Computer played: Scissors. You win!
+p
+You played: Paper. Computer played: Paper. Tie game!
+q
+Wins: 4, Losses: 1, Ties: 3
