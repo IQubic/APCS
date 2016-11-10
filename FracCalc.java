@@ -26,7 +26,9 @@ public class FracCalc {
         String[] tests = {"1/2 + 1/2", "1/2",
                             "1_2/3 * 1_3/4" , "1_3/4",
                             "2 / 3", "3",
-                            "1 - 1_2/3", "1_2/3"};
+                            "1 - 1_2/3", "1_2/3"
+                            "-3 * 4/2", "4/2"
+                            "1_1/2 - -4", "-4"};
 
         //Let's run the tests
         int numOfTests = tests.length / 2;
