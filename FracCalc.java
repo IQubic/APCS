@@ -6,7 +6,7 @@ public class FracCalc {
         String input = console.nextLine();
 
         //Parse one line of input
-        if (input.equals("test") {
+        if (input.equals("test")) {
             runTests();
         } else {
             System.out.println(produceAnswer(input));
@@ -14,7 +14,7 @@ public class FracCalc {
     }
 
     public static String produceAnswer(String input) {
-        String[] expression = input.split();
+        String[] expression = input.split(" ");
         return expression[2];
     }
     
@@ -26,8 +26,8 @@ public class FracCalc {
         String[] tests = {"1/2 + 1/2", "1/2",
                             "1_2/3 * 1_3/4" , "1_3/4",
                             "2 / 3", "3",
-                            "1 - 1_2/3", "1_2/3"
-                            "-3 * 4/2", "4/2"
+                            "1 - 1_2/3", "1_2/3",
+                            "-3 * 4/2", "4/2",
                             "1_1/2 - -4", "-4"};
 
         //Let's run the tests
@@ -35,9 +35,9 @@ public class FracCalc {
         int numOfTestsPassed = 0;
         for (int i = 0; i < tests.length; i += 2) {
             String testCase = tests[i];
-            String expectedResult = test[i + 1];
+            String expectedResult = tests[i + 1];
             String actualResult = produceAnswer(testCase);
-            if (if actualResult.equals(expectedResult)) {
+            if ( actualResult.equals(expectedResult)) {
                 //Test passed
                 numOfTestsPassed++;
             } else {
@@ -46,6 +46,6 @@ public class FracCalc {
             }
         }
         //After all tests are run
-        System.out.println(numOfTestsPassed + " out of " + numberOfTests + " passed");
+        System.out.println(numOfTestsPassed + " out of " + numOfTests + " passed");
     }
 }
