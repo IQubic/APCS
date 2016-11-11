@@ -3,9 +3,13 @@ import java.util.*;
 public class FracCalc {
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
-        String input = console.nextLine();
+        
+        //Print out a greeting
+        System.out.println("Welcome to FracCalc!");
+        System.out.println("Enter an equation or \"quit\" to quit");
 
         //Parse one line of input
+        String input = console.nextLine();
         if (input.equals("test")) {
             runTests();
         } else {
