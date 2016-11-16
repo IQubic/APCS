@@ -9,20 +9,28 @@ public class Rotate {
     }
 
     public static void rotate(int[] x, int offset) {
-        offset %= x.length;
+        //Shrink the array to be within the offset
+        if (offset > x.length) {
+            offset %= x.length;
+        }
+
+        //Declare some variables
+        //Dest is always earlier in the array
         int temp = x[0];
-        int src = 0;
+        int dest = 0;
         for (int i = 0; i < x.length; i++) {
-            int dest = i - offset;
-            if (dest < 0) {
-                dest += x.length;
+            //Find the new src based on the current dest
+            int src = dest + offset;
+            if (src > x.length - 1) {
+                src -= x.length;
             }
 
+            //Update the array
             if (i == x.length - 1) {
                 x[dest] = temp;
             } else {
                 x[dest] = x[src];
-                src = dest;
+                dest = src;
             }
         }
     }
