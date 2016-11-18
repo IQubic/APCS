@@ -8,31 +8,49 @@ public class FracCalc {
         System.out.println("Welcome to FracCalc!");
         System.out.println("Enter an equation or \"quit\" to quit");
 
-        //Parse one line of input
-        String input = console.nextLine();
-        if (input.equals("test")) {
-            runTests();
-        } else {
-            System.out.println(produceAnswer(input));
+        //Parse input
+        String input = console.nextLine().toLowerCase();
+
+        while (!input.equals("quit") {
+            if (input.equals("test")) {
+                runTests();
+            } else {
+                System.out.println(produceAnswer(input));
+            }
+            input = console.nextLine().toLowerCase();
         }
+
+        //Print a exit message
+        System.out.println("Goodbye!");
     }
 
+    //A call to produceAnswer gives the result of an operation
     public static String produceAnswer(String input) {
         String[] expression = input.split(" ");
-        return expression[2];
+        int[] frac1 = parseFraction(expression[0]);
+        int[] frac2 = parseFraction(expression[2]);
+        return "Whole: " + frac2[0] + ", Numerator: " + frac2[1] + ", Denominator: " + frac2;
+    }
+
+    //parseFraction takes a String and returns an int array repersenting the fraction
+    //fraction[0] = Whole Number
+    //fraction[1] = Numerator
+    //fraction[2] = Denominator
+    public static int[] parseFraction(String fraction) {
+        //TODO Implement this method
     }
 
     //Runs all tests and prints the results of the tests
     public static void runTests() {
         //Each pair of elements in this array goes together:
         //tests[i] = [test case, expected output]
-        String[][] tests = {{"1/2 + 1/2", "Whole: 0 Numerator: 1 Denominator: 2"},
-                            {"1_2/3 * 1_3/4" , "Whole: 1 Numerator: 3 Denominator: 4"},
-                            {"2 / 3", "Whole: 3 Numerator: 0 Denominator: 0"},
-                            {"1 - 1_2/3", "Whole: 1 Numerator: 2 Denominator: 3"},
-                            {"-3 * 4/2", "Whole: 0 Numerator: 4 Denominator: 2"},
-                            {"1_1/2 - -4", "Whole: -4 Numerator: 0 Denominator: 0"}
-                            {"1 + 1/-2", "Whole: 0 Numerator: 1 Denominator: -2"}};
+        String[][] tests = {{"1/2 + 1/2", "Whole: 0, Numerator: 1, Denominator: 2"},
+                            {"1_2/3 * 1_3/4" , "Whole: 1, Numerator: 3, Denominator: 4"},
+                            {"2 / 3", "Whole: 3, Numerator: 0, Denominator: 0"},
+                            {"1 - 1_2/3", "Whole: 1, Numerator: 2, Denominator: 3"},
+                            {"-3 * 4/2", "Whole: 0, Numerator: 4, Denominator: 2"},
+                            {"1_1/2 - -4", "Whole: -4, Numerator: 0, Denominator: 0"}
+                            {"1 + 1/-2", "Whole: 0, Numerator: 1, Denominator: -2"}};
 
         //Let's run the tests
         int numOfTests = tests.length;
