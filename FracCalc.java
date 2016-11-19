@@ -27,8 +27,9 @@ public class FracCalc {
     // A call to produceAnswer gives the result of a given input
     public static String produceAnswer(String input) {
         String[] expression = input.split(" ");
-        int[] frac1 = parseFraction(expression[0]);
-        int[] frac2 = parseFraction(expression[2]);
+        // Turn a String like 1_2/3 into an int[], then into an improper fraction for easier calculations
+        int[] frac1 = toImproperFraction(parseFraction(expression[0]));
+        int[] frac2 = toImproperFraction(parseFraction(expression[2]));
 
         int[] output = new int[3];
         switch (expression[1]) {
@@ -60,9 +61,12 @@ public class FracCalc {
     public static int[] divFrac(int[] frac1, int[] frac2) {
         return mulFrac(frac1, {frac2[0], frac2[2], frac2[1]});
     }
+
     public static String fracToString(int[] frac) {
-        //TODO Implement this
+        return frac[0] + "_" + frac[1] + "/" + frac[2];
     }
+
+    public static int[] 
 
     // parseFraction takes a String and returns an int array repersenting the fraction
     // fraction[0] = Whole Number
@@ -78,6 +82,7 @@ public class FracCalc {
             intFraction[i] = Integer.parseInt(stringFraction[i]);
         }
 
+        // Figure out what kind of a number we have, and format the ouput array correctly
         // Whole Number
         if (intFraction.length == 1) {
             return new int[] {intFraction[0], 0, 0};
