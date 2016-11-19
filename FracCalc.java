@@ -20,7 +20,7 @@ public class FracCalc {
             input = console.nextLine().toLowerCase();
         }
 
-        // Print a exit message
+        // Print an exit message
         System.out.println("Goodbye!");
     }
 
