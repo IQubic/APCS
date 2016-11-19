@@ -29,7 +29,20 @@ public class FracCalc {
         String[] expression = input.split(" ");
         int[] frac1 = parseFraction(expression[0]);
         int[] frac2 = parseFraction(expression[2]);
-        return "Whole: " + frac2[0] + ", Numerator: " + frac2[1] + ", Denominator: " + frac2[2];
+
+        int[] output = new int[3];
+        switch (expression[1]) {
+            case '+': output = addFrac(frac1, frac2);
+                      break;
+            case '-': output = subFrac(frac1, frac2);
+                      break;
+            case '*': output = mulFrac(frac1, frac2);
+                      break;
+            case '/': output = divFrac(frac1, frac2);
+                      break;
+        }
+
+        return fracToString(output);
     }
 
     // parseFraction takes a String and returns an int array repersenting the fraction
@@ -62,6 +75,8 @@ public class FracCalc {
     public static void runTests() {
         // Each pair of elements in this array goes together:
         // tests[i] = [test case, expected output]
+        // TODO ADD MORE TESTS
+        // TODO UPDATE THE RESULTS OF THE TESTS
         String[][] tests = {{"1/2 + 1/2", "Whole: 0, Numerator: 1, Denominator: 2"},
                             {"1_2/3 * 1_3/4" , "Whole: 1, Numerator: 3, Denominator: 4"},
                             {"2 / 3", "Whole: 3, Numerator: 0, Denominator: 0"},
