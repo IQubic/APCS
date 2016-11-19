@@ -45,12 +45,31 @@ public class FracCalc {
         return fracToString(output);
     }
 
+    public static int[] addFrac(int[] frac1, int[] frac2) {
+        //TODO Implement this
+    }
+
+    public static int[] subFrac(int[] frac1, int[] frac2) {
+        //TODO Implement this
+    }
+
+    public static int[] mulFrac(int[] frac1, int[] frac2) {
+        //TODO Implement this
+    }
+
+    public static int[] divFrac(int[] frac1, int[] frac2) {
+        return mulFrac(frac1, {frac2[0], frac2[2], frac2[1]});
+    }
+    public static String fracToString(int[] frac) {
+        //TODO Implement this
+    }
+
     // parseFraction takes a String and returns an int array repersenting the fraction
     // fraction[0] = Whole Number
     // fraction[1] = Numerator
     // fraction[2] = Denominator
     public static int[] parseFraction(String fraction) {
-        // Split the fraction it's parts
+        // Split the fraction its parts
         String[] stringFraction = fraction.split("[_/]");
 
         // Parse the Strings into ints
