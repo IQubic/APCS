@@ -28,10 +28,11 @@ public class FracCalc {
     public static String produceAnswer(String input) {
         String[] expression = input.split(" ");
         // Turn a String like 1_2/3 into an int[], then into an improper fraction for easier calculations
-        int[] frac1 = toImproperFraction(parseFraction(expression[0]));
-        int[] frac2 = toImproperFraction(parseFraction(expression[2]));
+        // toImproperFrac returns an int[] of length 2
+        int[] frac1 = toImproperFrac(parseFrac(expression[0]));
+        int[] frac2 = toImproperFrac(parseFrac(expression[2]));
 
-        int[] output = new int[3];
+        int[] output = new int[2];
         switch (expression[1]) {
             case '+': output = addFrac(frac1, frac2);
                       break;
@@ -46,6 +47,9 @@ public class FracCalc {
         return fracToString(output);
     }
 
+    // All the Mathematical Operations take int[] of Imporper Fractions in the form:
+    // {Numerator, Denominator}
+
     public static int[] addFrac(int[] frac1, int[] frac2) {
         //TODO Implement this
     }
@@ -59,40 +63,35 @@ public class FracCalc {
     }
 
     public static int[] divFrac(int[] frac1, int[] frac2) {
-        return mulFrac(frac1, {frac2[0], frac2[2], frac2[1]});
+        return mulFrac(frac1, {frac2[1], frac2[0]});
     }
 
     public static String fracToString(int[] frac) {
         return frac[0] + "_" + frac[1] + "/" + frac[2];
     }
 
-    public static int[] 
+    // This method returns an int[] of length 2
+    public static int[] toImproperFrac(int[] frac) {
+        if (frac.length == 1) {
+            return new int[] {frac[0], 1};
+        } else if (frac.length == 2) {
+            return frac;
+        } else {
+            return new int[] {frac[0] * frac[2] + frac[1], frac[2]};
+        }
+    }
 
-    // parseFraction takes a String and returns an int array repersenting the fraction
-    // fraction[0] = Whole Number
-    // fraction[1] = Numerator
-    // fraction[2] = Denominator
-    public static int[] parseFraction(String fraction) {
+    // parseFraction takes a String and returns an int[] repersenting the fraction
+    public static int[] parseFrac(String frac) {
         // Split the fraction its parts
-        String[] stringFraction = fraction.split("[_/]");
+        String[] stringFrac = frac.split("[_/]");
 
         // Parse the Strings into ints
-        int[] intFraction = new int[stringFraction.length];
-        for (int i = 0; i < stringFraction.length; i++) {
-            intFraction[i] = Integer.parseInt(stringFraction[i]);
+        int[] intFrac = new int[stringFrac.length];
+        for (int i = 0; i < stringFrac.length; i++) {
+            intFrac[i] = Integer.parseInt(stringFrac[i]);
         }
-
-        // Figure out what kind of a number we have, and format the ouput array correctly
-        // Whole Number
-        if (intFraction.length == 1) {
-            return new int[] {intFraction[0], 0, 0};
-        // Just a Fraction
-        } else if (intFraction.length == 2) {
-            return new int[] {0, intFraction[0], intFraction[1]};
-        // Mixed Number
-        } else {
-            return new int[] {intFraction[0], intFraction[1], intFraction[2]};
-        }
+        return intFrac[i];
     }
 
     // Runs all tests and prints the results of the tests
