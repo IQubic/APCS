@@ -34,40 +34,46 @@ public class FracCalc {
 
         int[] output = new int[2];
         switch (expression[1]) {
-            case '+': output = addFrac(frac1, frac2);
+            case "+": output = addFrac(frac1, frac2);
                       break;
-            case '-': output = subFrac(frac1, frac2);
+            case "-": output = subFrac(frac1, frac2);
                       break;
-            case '*': output = mulFrac(frac1, frac2);
+            case "*": output = mulFrac(frac1, frac2);
                       break;
-            case '/': output = divFrac(frac1, frac2);
+            case "/": output = divFrac(frac1, frac2);
                       break;
         }
 
         return fracToString(output);
     }
 
-    // All the Mathematical Operations take int[] of Imporper Fractions in the form:
+    // All the Mathematical Operations take two int[] of Imporper Fractions in the form:
     // {Numerator, Denominator}
 
     public static int[] addFrac(int[] frac1, int[] frac2) {
-        //TODO Implement this
+        return new int[] {frac1[0] * frac2[1] + frac2[0] * frac1[1],
+            frac1[1] * frac2[1]};
     }
 
+    // Subtracting is the same as adding a negative
     public static int[] subFrac(int[] frac1, int[] frac2) {
-        //TODO Implement this
+        return addFrac(frac1, new int[] {-frac2[0], frac2[1]});
     }
 
     public static int[] mulFrac(int[] frac1, int[] frac2) {
-        //TODO Implement this
+        return new int[] {frac1[0] * frac2[0],
+            frac1[1] * frac2[1]};
     }
 
+    // Division is the same as multiplying by the reciprical
     public static int[] divFrac(int[] frac1, int[] frac2) {
-        return mulFrac(frac1, {frac2[1], frac2[0]});
+        return mulFrac(frac1, new int[] {frac2[1], frac2[0]});
     }
 
+    // This method will recieve an int[] of length 2
+    // It will return a fraction of the form "a_b/c"
     public static String fracToString(int[] frac) {
-        return frac[0] + "_" + frac[1] + "/" + frac[2];
+        return  frac[0] + "/" + frac[1];
     }
 
     // This method returns an int[] of length 2
@@ -91,22 +97,29 @@ public class FracCalc {
         for (int i = 0; i < stringFrac.length; i++) {
             intFrac[i] = Integer.parseInt(stringFrac[i]);
         }
-        return intFrac[i];
+        return intFrac;
     }
 
     // Runs all tests and prints the results of the tests
     public static void runTests() {
         // Each pair of elements in this array goes together:
         // tests[i] = [test case, expected output]
-        // TODO ADD MORE TESTS
-        // TODO UPDATE THE RESULTS OF THE TESTS
-        String[][] tests = {{"1/2 + 1/2", "Whole: 0, Numerator: 1, Denominator: 2"},
-                            {"1_2/3 * 1_3/4" , "Whole: 1, Numerator: 3, Denominator: 4"},
-                            {"2 / 3", "Whole: 3, Numerator: 0, Denominator: 0"},
-                            {"1 - 1_2/3", "Whole: 1, Numerator: 2, Denominator: 3"},
-                            {"-3 * 4/2", "Whole: 0, Numerator: 4, Denominator: 2"},
-                            {"1_1/2 - -4", "Whole: -4, Numerator: 0, Denominator: 0"},
-                            {"1 + 1/-2", "Whole: 0, Numerator: 1, Denominator: -2"}};
+        String[][] tests = {{"1/2 + 1/2", "4/4"},
+                            {"1_2/3 * 1_3/4", "35/12"},
+                            {"2 / 3", "2/3"},
+                            {"2 * 4", "8/1"},
+                            {"3 + 2", "5/1"},
+                            {"5 - 2", "3/1"},
+                            {"1 - 1_2/3", "-2/3"},
+                            {"-3 * 4/2", "-12/2"},
+                            {"1_1/2 - -4", "11/2"},
+                            {"-4 - 1_1/2", "-11/2"},
+                            {"1 + -1/2", "1/2"},
+                            {"-1/2 + 1", "1/2"},
+                            {"1/2 / 1/2", "2/2"},
+                            {"1/2 * 1", "1/2"},
+                            {"1 * 1/2", "1/2"},
+                            {"1/2 / 1", "1/2"}};
 
         // Let's run the tests
         int numOfTests = tests.length;
@@ -115,7 +128,7 @@ public class FracCalc {
             String testCase = currentTest[0];
             String expectedResult = currentTest[1];
             String actualResult = produceAnswer(testCase);
-            if ( actualResult.equals(expectedResult)) {
+            if (actualResult.equals(expectedResult)) {
                 // Test passed
                 numOfTestsPassed++;
             } else {
