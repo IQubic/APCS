@@ -8,6 +8,8 @@ public class FracCalc {
         System.out.println("Welcome to FracCalc!");
         System.out.println("Enter an equation or \"quit\" to quit");
 
+        System.out.print("> ");
+
         // Parse input
         String input = console.nextLine().toLowerCase();
 
@@ -17,6 +19,7 @@ public class FracCalc {
             } else {
                 System.out.println(produceAnswer(input));
             }
+            System.out.print("> ");
             input = console.nextLine().toLowerCase();
         }
 
