@@ -93,11 +93,12 @@ public class FracCalc {
             isNegative = true;
         }
 
-        // TODO Turn into an mixed num and reduce
-        // finalFrac[0] = inputFrac[0] / inputFrac[1];
-        // inputFrac[0] -= finalFrac[0] * inputFrac[1];
-        // finalFrac[1] = inputFrac[0];
-        // finalFrac[2] = inputFrac[1];
+        // Turn into an mixed number
+        finalFrac[0] = inputFrac[0] / inputFrac[1];
+        finalFrac[1] = inputFrac[0] % inputFrac[1];
+        finalFrac[2] = inputFrac[1];
+
+        // TODO Reduce the fractional part
 
         // Convert to a string
         // Whole Number
