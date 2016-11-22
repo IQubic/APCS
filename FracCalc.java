@@ -84,13 +84,40 @@ public class FracCalc {
         // FinalFrac is the reduced fraction
         int[] finalFrac = new int[3];
 
-        // First I create a mixed number
-        // At this point the fractional part still might not be reduced
-        finalFrac[0] = inputFrac[1] / inputFrac[2];
-        finalFrac[1] = inputFrac[1] %  inputFrac[2];
-        finalFrac[2] = inputFrac[2];
+        // The isNegative flag tracks if the input is negative
+        // Working with a positive fraction makes
+        // Reducing and converting to a Mixed Number a lot simpler
+        boolean isNegative = false;
+        if (inputFrac[0] < 0) {
+            inputFrac[0] = -inputFrac[0];
+            isNegative = true;
+        }
 
-        return  finalFrac[0] + "_" + finalFrac[1] + "/" + finalFrac[2];
+        // TODO Turn into an mixed num and reduce
+        // finalFrac[0] = inputFrac[0] / inputFrac[1];
+        // inputFrac[0] -= finalFrac[0] * inputFrac[1];
+        // finalFrac[1] = inputFrac[0];
+        // finalFrac[2] = inputFrac[1];
+
+        // Convert to a string
+        // Whole Number
+        if (finalFrac[1] == 0) {
+            if (isNegative) {
+                finalFrac[0] = -finalFrac[0];
+            }
+            return String.valueOf(finalFrac[0]);
+        // Just a fration
+        } else if (finalFrac[0] == 0){
+            if (isNegative) {
+                finalFrac[1] = -finalFrac[1];
+            }
+            return finalFrac[1] + "/" + finalFrac[2];
+        } else {
+            if (isNegative) {
+                finalFrac[0] = -finalFrac[0];
+            }
+            return  finalFrac[0] + "_" + finalFrac[1] + "/" + finalFrac[2];
+        }
     }
 
     // This method returns an int[] of length 2
@@ -121,19 +148,20 @@ public class FracCalc {
     public static void runTests() {
         // Each pair of elements in this array goes together:
         // tests[i] = [test case, expected output]
-        String[][] tests = {{"1/2 + 1/2", "4/4"},
-                            {"1_2/3 * 1_3/4", "35/12"},
+        String[][] tests = {{"1/2 + 1/2", "1"},
+                            {"-3/4 + -3/4", "-1_1/2"},
+                            {"1_2/3 * 1_3/4", "2_11/12"},
                             {"2 / 3", "2/3"},
-                            {"2 * 4", "8/1"},
-                            {"3 + 2", "5/1"},
-                            {"5 - 2", "3/1"},
+                            {"2 * 4", "8"},
+                            {"3 + 2", "5"},
+                            {"5 - 2", "3"},
                             {"1 - 1_2/3", "-2/3"},
-                            {"-3 * 4/2", "-12/2"},
-                            {"1_1/2 - -4", "11/2"},
-                            {"-4 - 1_1/2", "-11/2"},
+                            {"-3 * 4/2", "-6"},
+                            {"1_1/2 - -4", "5_1/2"},
+                            {"-4 - 1_1/2", "-5_1/2"},
                             {"1 + -1/2", "1/2"},
                             {"-1/2 + 1", "1/2"},
-                            {"1/2 / 1/2", "2/2"},
+                            {"1/2 / 1/2", "1"},
                             {"1/2 * 1", "1/2"},
                             {"1 * 1/2", "1/2"},
                             {"1/2 / 1", "1/2"}};
@@ -150,7 +178,7 @@ public class FracCalc {
                 numOfTestsPassed++;
             } else {
                 // Test failed
-                System.out.println("\"" + testCase + "\" returned: " + actualResult + ". Expected result was: \"" + expectedResult + "\"");
+                System.out.println("\"" + testCase + "\" returned: \"" + actualResult + "\". Expected result was: \"" + expectedResult + "\"");
             }
         }
         // After all tests are run
