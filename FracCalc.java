@@ -17,7 +17,12 @@ public class FracCalc {
             if (input.equals("test")) {
                 runTests();
             } else {
-                System.out.println(produceAnswer(input));
+            // Try to get an answer, but print an error message if needed
+                try {
+                    System.out.println(produceAnswer(input));
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             System.out.print("> ");
             input = console.nextLine().toLowerCase();
@@ -28,45 +33,51 @@ public class FracCalc {
     }
 
     // A call to produceAnswer gives the result of a given input
-    public static String produceAnswer(String input) {
+    public static String produceAnswer(String input) throws IllegalArgumentException {
         ArrayList<int[]> fracs = new ArrayList<>();
         ArrayList<String> operators = new ArrayList<>();
 
-        // Try to parse the equation and return an error message if needed
+        // Try to parse the equation and throw an error if needed
         try {
             parseEqn(input, fracs, operators);
         } catch (IllegalArgumentException e) {
-            return e.getMessage();
+            throw e;
         }
 
         // Evaluate the equation
         evaluateEqn(fracs, operators);
 
-        // Reduce the fraction and turn it into a String
-        return reduceFracToString(fracs.get(1));
+        // Reduce the result and turn it into a String
+        return reduceFracToString(fracs.get(0));
     }
 
-    //TODO Comment this method
+    // parseEqn will fill up the given ArrayLists with the values that correspond to the given equation
+    // or it will throw an error if the input is wrong in any way
     public static void parseEqn(String input, ArrayList<int[]> fracs, ArrayList<String> operators) throws IllegalArgumentException {
         String[] eqn = input.split(" ");
 
+        // Check for an empty line given
         if (eqn.length == 0) {
             throw new IllegalArgumentException("No Input Given");
         }
 
         for (int i = 0; i < eqn.length; i++) {
-            String nextToken = eqn[0];
+            String nextToken = eqn[i];
+
+            // Every other token should be a fraction
             if (i % 2 == 0) {
+                // Either parsing the fraction will throw an error
+                // or trying to make the fraction improper will throw an error
+                // or we can successfully add the parsed fraction to the arraylist of fracs
                 try {
-                    int[] parsedFrac = parseFrac(nextToken);
-                    int[] improperFrac = toImproperFrac(parsedFrac);
-                    fracs.add(improperFrac);
+                    fracs.add(toImproperFrac(parseFrac(nextToken)));
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException("Parse error on input: Invalid Fraction \"" + nextToken + "\"");
                 } catch (ArithmeticException e) {
                     throw new IllegalArgumentException("Parse error on input: Divide by Zero \"" + nextToken + "\"");
                 }
             } else {
+                // If you expect an operator but recive something else, that's an error
                 if (isAnOperator(nextToken)) {
                     operators.add(nextToken);
                 } else {
@@ -76,9 +87,31 @@ public class FracCalc {
         }
     }
 
-    // TODO Implement this method
+    // evaluateEqn will take the ArrayLists corresponding to the current equation
+    // and evaluating them to a single result
+    // By the end of this method, fracs will contain one element, the result
+    // It takes the first two fractions, and combines them according to the first operator
+    // Then the first two fractions are replaced with the result of that operation,
+    // and the first operator is removed
     public static void evaluateEqn(ArrayList<int[]> fracs, ArrayList<String> operators) {
-
+        while(fracs.size() != 1) {
+            // Result stores the result of just the last computation
+            // I have to give it some default value
+            int[] result = {0, 0};
+            switch (operators.get(0)) {
+                case "+": result = addFrac(fracs.get(0), fracs.get(1));
+                          break;
+                case "-": result = subFrac(fracs.get(0), fracs.get(1));
+                          break;
+                case "*": result = mulFrac(fracs.get(0), fracs.get(1));
+                          break;
+                case "/": result = divFrac(fracs.get(0), fracs.get(1));
+                          break;
+            }
+            fracs.remove(0);
+            fracs.set(0, result);
+            operators.remove(0);
+        }
     }
 
 
