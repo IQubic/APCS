@@ -29,29 +29,56 @@ public class FracCalc {
 
     // A call to produceAnswer gives the result of a given input
     public static String produceAnswer(String input) {
-        String[] expression = input.split(" ");
+        ArrayList<int[]> fracs = new ArrayList<>();
+        ArrayList<String> operators = new ArrayList<>();
 
-        // Turn a String like 1_2/3 into an int[], then into an improper fraction for easier calculations
-        // toImproperFrac returns an int[] of length 2
-        int[] frac1 = toImproperFrac(parseFrac(expression[0]));
-        int[] frac2 = toImproperFrac(parseFrac(expression[2]));
-
-        // Create a new array for storing the output, and call the appropriate
-        // mathematical method
-        int[] output = new int[2];
-        switch (expression[1]) {
-            case "+": output = addFrac(frac1, frac2);
-                      break;
-            case "-": output = subFrac(frac1, frac2);
-                      break;
-            case "*": output = mulFrac(frac1, frac2);
-                      break;
-            case "/": output = divFrac(frac1, frac2);
-                      break;
+        // Try to parse the equation and return an error message if needed
+        try {
+            parseEqn(input, fracs, operators);
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
         }
 
+        // Evaluate the equation
+        evaluateEqn(fracs, operators);
+
         // Reduce the fraction and turn it into a String
-        return reduceFracToString(output);
+        return reduceFracToString(fracs.get(1));
+    }
+
+    //TODO Comment this method
+    public static void parseEqn(String input, ArrayList<int[]> fracs, ArrayList<String> operators) throws IllegalArgumentException {
+        String[] eqn = input.split(" ");
+
+        if (eqn.length == 0) {
+            throw new IllegalArgumentException("No Input Given");
+        }
+
+        for (int i = 0; i < eqn.length; i++) {
+            String nextToken = eqn[0];
+            if (i % 2 == 0) {
+                try {
+                    int[] parsedFrac = parseFrac(nextToken);
+                    int[] improperFrac = toImproperFrac(parsedFrac);
+                    fracs.add(improperFrac);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Parse error on input: Invalid Fraction \"" + nextToken + "\"");
+                } catch (ArithmeticException e) {
+                    throw new IllegalArgumentException("Parse error on input: Divide by Zero \"" + nextToken + "\"");
+                }
+            } else {
+                if (isAnOperator(nextToken)) {
+                    operators.add(nextToken);
+                } else {
+                    throw new IllegalArgumentException("Parse error on input: Illegal Operator \"" + nextToken + "\"");
+                }
+            }
+        }
+    }
+
+    // TODO Implement this method
+    public static void evaluateEqn(ArrayList<int[]> fracs, ArrayList<String> operators) {
+
     }
 
     // All the Mathematical Operations take two int[] of Imporper Fractions in the form:
@@ -136,18 +163,25 @@ public class FracCalc {
     }
 
     // This method returns an int[] of length 2
-    public static int[] toImproperFrac(int[] frac) {
+    public static int[] toImproperFrac(int[] frac) throws ArithmeticException {
+        int[] improperFrac;
         if (frac.length == 1) {
-            return new int[] {frac[0], 1};
+            improperFrac = new int[] {frac[0], 1};
         } else if (frac.length == 2) {
-            return frac;
+            improperFrac = frac;
         } else {
-            return new int[] {frac[0] * frac[2] + frac[1], frac[2]};
+            improperFrac = new int[] {frac[0] * frac[2] + frac[1], frac[2]};
+        }
+        // Divide by zero error
+        if (improperFrac[1] == 0) {
+            throw new ArithmeticException();
+        } else {
+            return improperFrac;
         }
     }
 
-    // parseFraction takes a String and returns an int[] repersenting the fraction
-    public static int[] parseFrac(String frac) {
+    // parseFrac takes a String and returns an int[] repersenting the fraction
+    public static int[] parseFrac(String frac) throws NumberFormatException {
         // Split the fraction its parts
         String[] stringFrac = frac.split("[_/]");
 
@@ -157,6 +191,10 @@ public class FracCalc {
             intFrac[i] = Integer.parseInt(stringFrac[i]);
         }
         return intFrac;
+    }
+
+    public static boolean isAnOperator(String op) {
+        return op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/");
     }
 
     // Runs all tests and prints the results of the tests
