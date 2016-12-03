@@ -98,7 +98,10 @@ public class FracCalc {
         finalFrac[1] = inputFrac[0] % inputFrac[1];
         finalFrac[2] = inputFrac[1];
 
-        // TODO Reduce the fractional part
+        // Reduce the fractional part
+        int gcd = gcd(finalFrac[1], finalFrac[2]);
+        finalFrac[1] /= gcd;
+        finalFrac[2] /= gcd;
 
         // Convert to a string
         // Whole Number
@@ -119,6 +122,17 @@ public class FracCalc {
             }
             return  finalFrac[0] + "_" + finalFrac[1] + "/" + finalFrac[2];
         }
+    }
+
+    // Euclid's algorithm
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int newB = a % b;
+            a = b;
+            b = newB;
+        }
+
+        return a;
     }
 
     // This method returns an int[] of length 2
@@ -150,6 +164,8 @@ public class FracCalc {
         // Each pair of elements in this array goes together:
         // tests[i] = [test case, expected output]
         String[][] tests = {{"1/2 + 1/2", "1"},
+                            {"39/130 + 0", "3/10"},
+                            {"130/39 + 0", "3_1/3"},
                             {"-3/4 + -3/4", "-1_1/2"},
                             {"1_2/3 * 1_3/4", "2_11/12"},
                             {"2 / 3", "2/3"},
