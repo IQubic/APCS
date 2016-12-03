@@ -81,6 +81,7 @@ public class FracCalc {
 
     }
 
+
     // All the Mathematical Operations take two int[] of Imporper Fractions in the form:
     // {Numerator, Denominator}
     // And return an int[] of the same form
