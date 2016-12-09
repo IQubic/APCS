@@ -88,7 +88,10 @@ public class FracCalc {
                     throw new IllegalArgumentException("Parse error on input: Illegal Operator \"" + nextToken + "\"");
                 }
             }
+
             // Check for a divide by zero with a sace between the zero and the division symbol
+            // Only check afte three tokens have been parsed to make sure that the operators list 
+            // has atleast a single element in it
             if (i >= 3) {
                 if (operators.get(operators.size() - 1).equals("/") && fracs.get(fracs.size() - 1)[0] == 0) {
                     throw new IllegalArgumentException("Divide by Zero Error");
@@ -209,12 +212,21 @@ public class FracCalc {
     // This method returns an int[] of length 2
     public static int[] toImproperFrac(int[] frac) throws ArithmeticException {
         int[] improperFrac;
+        // Whole
         if (frac.length == 1) {
             improperFrac = new int[] {frac[0], 1};
+        // Just a fraction
         } else if (frac.length == 2) {
             improperFrac = frac;
+        // Mixed Number
         } else {
-            improperFrac = new int[] {frac[0] * frac[2] + frac[1], frac[2]};
+            // Positive Whole
+            if (frac[0] > 0) {
+                improperFrac = new int[] {frac[0] * frac[2] + frac[1], frac[2]};
+            // Negative Whole
+            } else {
+                improperFrac = new int[] {frac[0] * frac[2] - frac[1], frac[2]};
+            }
         }
         // Divide by zero error
         if (improperFrac[1] == 0) {
