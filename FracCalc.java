@@ -54,13 +54,12 @@ public class FracCalc {
     // parseEqn will fill up the given ArrayLists with the values that correspond to the given equation
     // or it will throw an error if the input is wrong in any way
     public static void parseEqn(String input, ArrayList<int[]> fracs, ArrayList<String> operators) throws IllegalArgumentException {
-        String[] eqn = input.split(" ");
-
         // Check for an empty line given
-        if (eqn.length == 0) {
+        if (input.equals("")) {
             throw new IllegalArgumentException("No Input Given");
         }
 
+        String[] eqn = input.split(" ");
         for (int i = 0; i < eqn.length; i++) {
             String nextToken = eqn[i];
 
