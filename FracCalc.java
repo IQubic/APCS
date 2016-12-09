@@ -59,7 +59,12 @@ public class FracCalc {
             throw new IllegalArgumentException("No Input Given");
         }
 
+        // Check for too few arguments
         String[] eqn = input.split(" ");
+        if (eqn.length < 3) {
+            throw new IllegalArgumentException("Parse error on input: Too few tokens");
+        }
+
         for (int i = 0; i < eqn.length; i++) {
             String nextToken = eqn[i];
 
@@ -83,10 +88,11 @@ public class FracCalc {
                     throw new IllegalArgumentException("Parse error on input: Illegal Operator \"" + nextToken + "\"");
                 }
             }
-
             // Check for a divide by zero with a sace between the zero and the division symbol
-            if (operators.get(operators.size() - 1).equals("/") && fracs.get(fracs.size() - 1)[0] == 0) {
-                throw new IllegalArgumentException("Divide by Zero Error");
+            if (i >= 3) {
+                if (operators.get(operators.size() - 1).equals("/") && fracs.get(fracs.size() - 1)[0] == 0) {
+                    throw new IllegalArgumentException("Divide by Zero Error");
+                }
             }
         }
     }
@@ -242,6 +248,8 @@ public class FracCalc {
         String[][] tests = {{"1/2 + 1/2", "1"},
                             {"39/130 + 0", "3/10"},
                             {"130/39 + 0", "3_1/3"},
+                            {"-12_1/2 + 0", "-12_1/2"},
+                            {"-1_1/2 + 1_1/2", "0"},
                             {"-3/4 + -3/4", "-1_1/2"},
                             {"1_2/3 * 1_3/4", "2_11/12"},
                             {"2 / 3", "2/3"},
