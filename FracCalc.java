@@ -86,7 +86,7 @@ public class FracCalc {
             }
 
             // Check for a divide by zero with a sace between the zero and the division symbol
-            if (fracs.get(fracs.size() - 1)[0] == 0 && operators.get(operators.size() - 1).equals("/")) {
+            if (operators.get(operators.size() - 1).equals("/") && fracs.get(fracs.size() - 1)[0] == 0) {
                 throw new IllegalArgumentException("Divide by Zero Error");
             }
         }
@@ -113,7 +113,6 @@ public class FracCalc {
                 case "/": result = divFrac(fracs.get(0), fracs.get(1));
                           break;
             }
-
             fracs.remove(0);
             fracs.set(0, result);
             operators.remove(0);
