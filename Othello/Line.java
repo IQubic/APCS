@@ -1,12 +1,16 @@
 public class Line {
     private BoardPos start;
     private BoardPos end;
-    private BoardPos direction;
+    private Direction dir;
 
-    public Line(BoardPos tile, BoardPos direction) {
+    public Line(BoardPos tile, Direction dir) {
         this.start = tile;
         this.end = tile;
-        this.direction = direction;
+        this.dir = dir;
+    }
+
+    public void extendLine(Direction dir) {
+        this.end = this.dir.nextTile(end);
     }
 
     public BoardPos getStart() {

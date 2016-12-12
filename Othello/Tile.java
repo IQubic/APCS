@@ -7,11 +7,6 @@ public class BoardPos {
         this.col = col;
     }
 
-    public void nextPos(BoardPos direction) {
-        this.row += direction.row;
-        this.col += direction.col;
-    }
-
     public int getRow() {
         return this.row;
     }
