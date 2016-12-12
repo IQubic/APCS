@@ -1,3 +1,4 @@
+// This enum lists all the directions
 public enum Direction {
     NW(-1, -1),
     N(0, -1),
@@ -15,7 +16,8 @@ public enum Direction {
         this.colDir = colDir;
     }
 
-    public BoardPos nextTile(BoardPos curTile) {
-        return new BoardPos(curTile.getRow() + rowDir, curTile.getCol() + colDir);
+    // Returns the next tile along in a line
+    public Tile nextTile(Tile curTile) {
+        return new Tile(curTile.getRow() + rowDir, curTile.getCol() + colDir);
     }
 }

@@ -1,8 +1,10 @@
 import java.util.*;
 
-public class Board{
+// The game board
+public class Board {
     private char[][] board;
 
+    //Read the board from a scanner
     public Board(Scanner scan) {
         board = new char[8][8];
         for (int i = 0; i < 8; i++) {
@@ -12,6 +14,7 @@ public class Board{
         }
     }
 
+    //Write the board to std out
     public void display() {
         for (char[] row : this.board) {
             for (char col : row) {
@@ -21,7 +24,8 @@ public class Board{
         }
     }
 
+    //Update the board by flipping an entire line of pieces
     public void flipLine(Line line){
-        BoardPos tileToFlip = line.getStart();
+        //TODO Make This Method
     }
 }

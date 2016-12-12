@@ -1,9 +1,10 @@
+// This class represents a line of tiles
 public class Line {
-    private BoardPos start;
-    private BoardPos end;
+    private Tile start;
+    private Tile end;
     private Direction dir;
 
-    public Line(BoardPos tile, Direction dir) {
+    public Line(Tile tile, Direction dir) {
         this.start = tile;
         this.end = tile;
         this.dir = dir;
@@ -13,15 +14,15 @@ public class Line {
         this.end = this.dir.nextTile(end);
     }
 
-    public BoardPos getStart() {
+    public Tile getStart() {
         return this.start;
     }
 
-    public BoardPos getEnd() {
+    public Tile getEnd() {
         return this.end;
     }
 
-    public BoardPos getDirection() {
-        return this.direction;
+    public Direction getDirection() {
+        return this.dir;
     }
 }
