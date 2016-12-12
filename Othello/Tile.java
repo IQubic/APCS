@@ -8,6 +8,11 @@ public class Tile {
         this.col = col;
     }
 
+    // Gets the next Tile along in a given direction
+    public Tile nextTile(Direction dir) {
+        return new Tile(this.row + dir.getRowDir(), this.col + dir.getColDir());
+    }
+
     public int getRow() {
         return this.row;
     }

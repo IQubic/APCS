@@ -16,8 +16,11 @@ public enum Direction {
         this.colDir = colDir;
     }
 
-    // Returns the next tile along in a line
-    public Tile nextTile(Tile curTile) {
-        return new Tile(curTile.getRow() + rowDir, curTile.getCol() + colDir);
+    public int getRowDir() {
+        return rowDir;
+    }
+
+    public int getColDir() {
+        return colDir;
     }
 }
