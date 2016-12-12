@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class FracCalc {
+    public static final String ERROR = "Parse error on input: ";
+
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
 
@@ -62,7 +64,7 @@ public class FracCalc {
         // Check for too few arguments
         String[] eqn = input.split(" ");
         if (eqn.length < 3) {
-            throw new IllegalArgumentException("Parse error on input: Too few tokens");
+            throw new IllegalArgumentException(ERROR + "Too few tokens");
         }
 
         for (int i = 0; i < eqn.length; i++) {
@@ -76,16 +78,16 @@ public class FracCalc {
                 try {
                     fracs.add(toImproperFrac(parseFrac(nextToken)));
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Parse error on input: Invalid Fraction \"" + nextToken + "\"");
+                    throw new IllegalArgumentException(ERROR + "Invalid Fraction \"" + nextToken + "\"");
                 } catch (ArithmeticException e) {
-                    throw new IllegalArgumentException("Parse error on input: Divide by Zero \"" + nextToken + "\"");
+                    throw new IllegalArgumentException(ERROR + "Divide by Zero \"" + nextToken + "\"");
                 }
             } else {
                 // If you expect an operator but recive something else, that's an error
                 if (isAnOperator(nextToken)) {
                     operators.add(nextToken);
                 } else {
-                    throw new IllegalArgumentException("Parse error on input: Illegal Operator \"" + nextToken + "\"");
+                    throw new IllegalArgumentException(ERROR + "Illegal Operator \"" + nextToken + "\"");
                 }
             }
 
