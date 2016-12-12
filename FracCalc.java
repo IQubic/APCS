@@ -221,7 +221,7 @@ public class FracCalc {
         // Mixed Number
         } else {
             // Positive Whole
-            if (frac[0] > 0) {
+            if (frac[0] >= 0) {
                 improperFrac = new int[] {frac[0] * frac[2] + frac[1], frac[2]};
             // Negative Whole
             } else {
