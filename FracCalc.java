@@ -62,9 +62,10 @@ public class FracCalc {
         }
 
         // Check for too few arguments
+        // But allow a single fraction to pass and later be reduced
         String[] eqn = input.split(" ");
-        if (eqn.length < 3) {
-            throw new IllegalArgumentException(ERROR + "Too few tokens");
+        if (eqn.length < 3 && !(eqn.length == 1)) {
+            throw new IllegalArgumentException(ERROR + "Too few operands");
         }
 
         for (int i = 0; i < eqn.length; i++) {
