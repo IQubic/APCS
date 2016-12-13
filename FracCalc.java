@@ -106,53 +106,44 @@ public class FracCalc {
     // evaluateEqn will take the ArrayLists corresponding to the current equation
     // and evaluating them to a single result
     // By the end of this method, fracs will contain one element, the result
-    // It takes the first two fractions, and combines them according to the first operator
-    // Then the first two fractions are replaced with the result of that operation,
-    // and the first operator is removed
+    // The order of operations 2D list specifies the proper order of operations to use
     public static void evaluateEqn(ArrayList<int[]> fracs, ArrayList<String> operators) {
-        while(fracs.size() != 1) {
-            // Result stores the result of just the last computation
-            // I have to give it some default value
-            int[] result = {0, 0};
-            switch (operators.get(0)) {
-                case "+": result = addFrac(fracs.get(0), fracs.get(1));
-                          break;
-                case "-": result = subFrac(fracs.get(0), fracs.get(1));
-                          break;
-                case "*": result = mulFrac(fracs.get(0), fracs.get(1));
-                          break;
-                case "/": result = divFrac(fracs.get(0), fracs.get(1));
-                          break;
+        List<List<String>> orderOfOperations = new ArrayList<>();
+        orderOfOperations.add(Arrays.asList(new String[] {"*", "/"}));
+        orderOfOperations.add(Arrays.asList(new String[] {"+", "-"}));
+
+        // Evaluate the equation
+        for (List<String> curOps : orderOfOperations) {
+            for (int opIndex = 0; opIndex < operators.size(); opIndex++) {
+                String curOp = operators.get(opIndex);
+                int frac1Index = opIndex;
+                int frac2Index = opIndex + 1;
+
+                if (curOps.contains(curOp)) {
+                    int[] result = applyOperation(fracs.get(frac1Index), fracs.get(frac2Index), curOp);
+                    fracs.remove(frac1Index);
+                    fracs.remove(frac1Index);
+                    fracs.add(frac1Index, result);
+                    operators.remove(opIndex);
+                    opIndex--;
+                }
             }
-            fracs.remove(0);
-            fracs.set(0, result);
-            operators.remove(0);
         }
     }
 
+    // This method will apply whichever operation is needed.
+    // The switch statement has some fall-throughs because subtration is the same as adding a negative,
+    // and division is the same as multiplying by the reciprocal
+    public static int[] applyOperation(int[] frac1, int[] frac2, String op) {
+        switch (op) {
+            case "-": frac2 = new int[] {-frac2[0], frac2[1]};
+            case "+": return new int[] {frac1[0] * frac2[1] + frac2[0] * frac1[1],
+                                        frac1[1] * frac2[1]};
+            case "/": frac2 = new int[] {frac2[1], frac2[0]};
+            case "*": return new int[] {frac1[0] * frac2[0], frac1[1] * frac2[1]};
+        }
 
-    // All the Mathematical Operations take two int[] of Imporper Fractions in the form:
-    // {Numerator, Denominator}
-    // And return an int[] of the same form
-
-    public static int[] addFrac(int[] frac1, int[] frac2) {
-        return new int[] {frac1[0] * frac2[1] + frac2[0] * frac1[1],
-            frac1[1] * frac2[1]};
-    }
-
-    // Subtracting is the same as adding a negative
-    public static int[] subFrac(int[] frac1, int[] frac2) {
-        return addFrac(frac1, new int[] {-frac2[0], frac2[1]});
-    }
-
-    public static int[] mulFrac(int[] frac1, int[] frac2) {
-        return new int[] {frac1[0] * frac2[0],
-            frac1[1] * frac2[1]};
-    }
-
-    // Division is the same as multiplying by the reciprical
-    public static int[] divFrac(int[] frac1, int[] frac2) {
-        return mulFrac(frac1, new int[] {frac2[1], frac2[0]});
+        return new int[] {0, 0};
     }
 
     // This method will recieve an int[] of length 2
