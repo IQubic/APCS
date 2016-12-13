@@ -1,5 +1,8 @@
 import java.util.*;
 
+// This version of FracCalc supports + - * /
+// It handles error catching
+// It also does multiple operation support using order of operations
 public class FracCalc {
     public static final String ERROR = "Parse error on input: ";
 
@@ -19,12 +22,7 @@ public class FracCalc {
             if (input.equals("test")) {
                 runTests();
             } else {
-            // Try to get an answer, but print an error message if needed
-                try {
-                    System.out.println(produceAnswer(input));
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
+                System.out.println(produceAnswer(input));
             }
             System.out.print("> ");
             input = console.nextLine().toLowerCase();
@@ -35,7 +33,7 @@ public class FracCalc {
     }
 
     // A call to produceAnswer gives the result of a given input
-    public static String produceAnswer(String input) throws IllegalArgumentException {
+    public static String produceAnswer(String input) {
         ArrayList<int[]> fracs = new ArrayList<>();
         ArrayList<String> operators = new ArrayList<>();
 
@@ -43,7 +41,7 @@ public class FracCalc {
         try {
             parseEqn(input, fracs, operators);
         } catch (IllegalArgumentException e) {
-            throw e;
+            return e.getMessage();
         }
 
         // Evaluate the equation
@@ -65,12 +63,11 @@ public class FracCalc {
         // But allow a single fraction to pass and later be reduced
         String[] eqn = input.split(" ");
         if (eqn.length < 3 && !(eqn.length == 1)) {
-            throw new IllegalArgumentException(ERROR + "Too few operands");
+            throw new IllegalArgumentException(ERROR + "Too Few Operands");
         }
 
         for (int i = 0; i < eqn.length; i++) {
             String nextToken = eqn[i];
-
             // Every other token should be a fraction
             if (i % 2 == 0) {
                 // Either parsing the fraction will throw an error
@@ -92,10 +89,10 @@ public class FracCalc {
                 }
             }
 
-            // Check for a divide by zero with a sace between the zero and the division symbol
-            // Only check afte three tokens have been parsed to make sure that the operators list 
+            // Check for a divide by zero with a space between the zero and the division symbol
+            // Only check afte three tokens have been parsed to make sure that the operators list
             // has atleast a single element in it
-            if (i >= 3) {
+            if (i >= 2) {
                 if (operators.get(operators.size() - 1).equals("/") && fracs.get(fracs.size() - 1)[0] == 0) {
                     throw new IllegalArgumentException("Divide by Zero Error");
                 }
@@ -271,7 +268,18 @@ public class FracCalc {
                             {"1/2 / 1/2", "1"},
                             {"1/2 * 1", "1/2"},
                             {"1 * 1/2", "1/2"},
-                            {"1/2 / 1", "1/2"}};
+                            {"1/2 / 1", "1/2"},
+                            {"56/4" , "14"},
+                            {"1_5/4", "2_1/4"},
+                            {"1 + 2 * 3 + 4", "11"},
+                            {"1 / 2 + 4 / 2", "2_1/2"},
+                            {"b/2", ERROR + "Invalid Fraction \"b/2\""},
+                            {"1_b/2", ERROR + "Invalid Fraction \"1_b/2\""},
+                            {"1 ++ 2", ERROR + "Illegal Operator \"++\""},
+                            {"1/0 + 2", ERROR + "Divide by Zero \"1/0\""},
+                            {"1 / 0", "Divide by Zero Error"},
+                            {"1 *", ERROR + "Too Few Operands"},
+                            {"", "No Input Given"}};
 
         // Let's run the tests
         int numOfTests = tests.length;
