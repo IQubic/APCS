@@ -8,6 +8,8 @@ public class FracCalc {
         System.out.println("Welcome to FracCalc!");
         System.out.println("Enter an equation or \"quit\" to quit");
 
+        System.out.print("> ");
+
         // Parse input
         String input = console.nextLine().toLowerCase();
 
@@ -17,6 +19,7 @@ public class FracCalc {
             } else {
                 System.out.println(produceAnswer(input));
             }
+            System.out.print("> ");
             input = console.nextLine().toLowerCase();
         }
 
@@ -27,11 +30,14 @@ public class FracCalc {
     // A call to produceAnswer gives the result of a given input
     public static String produceAnswer(String input) {
         String[] expression = input.split(" ");
+
         // Turn a String like 1_2/3 into an int[], then into an improper fraction for easier calculations
         // toImproperFrac returns an int[] of length 2
         int[] frac1 = toImproperFrac(parseFrac(expression[0]));
         int[] frac2 = toImproperFrac(parseFrac(expression[2]));
 
+        // Create a new array for storing the output, and call the appropriate
+        // mathematical method
         int[] output = new int[2];
         switch (expression[1]) {
             case "+": output = addFrac(frac1, frac2);
@@ -44,11 +50,13 @@ public class FracCalc {
                       break;
         }
 
-        return fracToString(output);
+        // Reduce the fraction and turn it into a String
+        return reduceFracToString(output);
     }
 
     // All the Mathematical Operations take two int[] of Imporper Fractions in the form:
     // {Numerator, Denominator}
+    // And return an int[] of the same form
 
     public static int[] addFrac(int[] frac1, int[] frac2) {
         return new int[] {frac1[0] * frac2[1] + frac2[0] * frac1[1],
@@ -71,9 +79,60 @@ public class FracCalc {
     }
 
     // This method will recieve an int[] of length 2
-    // It will return a fraction of the form "a_b/c"
-    public static String fracToString(int[] frac) {
-        return  frac[0] + "/" + frac[1];
+    // It will return a reduced fraction of the form "a_b/c"
+    public static String reduceFracToString(int[] inputFrac) {
+        // FinalFrac is the reduced fraction
+        int[] finalFrac = new int[3];
+
+        // The isNegative flag tracks if the input is negative
+        // Working with a positive fraction makes
+        // Reducing and converting to a Mixed Number a lot simpler
+        boolean isNegative = false;
+        if (inputFrac[0] < 0) {
+            inputFrac[0] = -inputFrac[0];
+            isNegative = true;
+        }
+
+        // Turn into an mixed number
+        finalFrac[0] = inputFrac[0] / inputFrac[1];
+        finalFrac[1] = inputFrac[0] % inputFrac[1];
+        finalFrac[2] = inputFrac[1];
+
+        // Reduce the fractional part
+        int gcd = gcd(finalFrac[1], finalFrac[2]);
+        finalFrac[1] /= gcd;
+        finalFrac[2] /= gcd;
+
+        // Convert to a string
+        // Whole Number
+        if (finalFrac[1] == 0) {
+            if (isNegative) {
+                finalFrac[0] = -finalFrac[0];
+            }
+            return String.valueOf(finalFrac[0]);
+        // Just a fration
+        } else if (finalFrac[0] == 0){
+            if (isNegative) {
+                finalFrac[1] = -finalFrac[1];
+            }
+            return finalFrac[1] + "/" + finalFrac[2];
+        } else {
+            if (isNegative) {
+                finalFrac[0] = -finalFrac[0];
+            }
+            return  finalFrac[0] + "_" + finalFrac[1] + "/" + finalFrac[2];
+        }
+    }
+
+    // Euclid's algorithm
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int newB = a % b;
+            a = b;
+            b = newB;
+        }
+
+        return a;
     }
 
     // This method returns an int[] of length 2
@@ -104,19 +163,22 @@ public class FracCalc {
     public static void runTests() {
         // Each pair of elements in this array goes together:
         // tests[i] = [test case, expected output]
-        String[][] tests = {{"1/2 + 1/2", "4/4"},
-                            {"1_2/3 * 1_3/4", "35/12"},
+        String[][] tests = {{"1/2 + 1/2", "1"},
+                            {"39/130 + 0", "3/10"},
+                            {"130/39 + 0", "3_1/3"},
+                            {"-3/4 + -3/4", "-1_1/2"},
+                            {"1_2/3 * 1_3/4", "2_11/12"},
                             {"2 / 3", "2/3"},
-                            {"2 * 4", "8/1"},
-                            {"3 + 2", "5/1"},
-                            {"5 - 2", "3/1"},
+                            {"2 * 4", "8"},
+                            {"3 + 2", "5"},
+                            {"5 - 2", "3"},
                             {"1 - 1_2/3", "-2/3"},
-                            {"-3 * 4/2", "-12/2"},
-                            {"1_1/2 - -4", "11/2"},
-                            {"-4 - 1_1/2", "-11/2"},
+                            {"-3 * 4/2", "-6"},
+                            {"1_1/2 - -4", "5_1/2"},
+                            {"-4 - 1_1/2", "-5_1/2"},
                             {"1 + -1/2", "1/2"},
                             {"-1/2 + 1", "1/2"},
-                            {"1/2 / 1/2", "2/2"},
+                            {"1/2 / 1/2", "1"},
                             {"1/2 * 1", "1/2"},
                             {"1 * 1/2", "1/2"},
                             {"1/2 / 1", "1/2"}};
@@ -133,7 +195,7 @@ public class FracCalc {
                 numOfTestsPassed++;
             } else {
                 // Test failed
-                System.out.println("\"" + testCase + "\" returned: " + actualResult + ". Expected result was: \"" + expectedResult + "\"");
+                System.out.println("\"" + testCase + "\" returned: \"" + actualResult + "\". Expected result was: \"" + expectedResult + "\"");
             }
         }
         // After all tests are run
