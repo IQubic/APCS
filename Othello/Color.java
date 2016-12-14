@@ -23,7 +23,7 @@ public enum Color {
         } else {
             return ".";
         }
- 
+
     }
 
     public Color getOpposingColor() {
