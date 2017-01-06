@@ -8,6 +8,10 @@ public class Blackjack {
         // For storing the scores of each player
         ArrayList<Player> players = new ArrayList<Player>();
 
+        // Player order
+        int[] playerOrder = new int[2];
+        selectPlayerOrder(playerOrder);
+
         // For scoring the final scores of each player
         // -1 represents a bust
         int[] finalScores = new int[2];
@@ -35,7 +39,9 @@ public class Blackjack {
 
             int currentPlayerNumber = 0;
             // Player take turns sequentially
-            for (Player player : players) {
+            for (int playerNum : playerOrder) {
+                Player player = players.get(playerNum);
+
                 showFaceUpCards(players);
 
                 System.out.println(player.getName() + ", it is your turn.");
@@ -109,6 +115,7 @@ public class Blackjack {
                 }
                 dealer.reset();
                 System.out.println("==============");
+                selectPlayerOrder(playerOrder);
             }
         } while (playAgain == 'y');
     }
@@ -123,6 +130,16 @@ public class Blackjack {
     public static void printScores(ArrayList<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName() + " has " + player.getWins() + " wins.");
+        }
+    }
+
+    // Selects the order that the players play in
+    public static void selectPlayerOrder(int[] playerOrder) {
+        playerOrder[0] = (int) (Math.random() * 2) % 2;
+        if (playerOrder[0] == 0) {
+            playerOrder[1] = 1;
+        } else {
+            playerOrder[1] = 0;
         }
     }
 }
