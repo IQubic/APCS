@@ -88,10 +88,10 @@ public class Blackjack {
                 players.get(1).increaseWins(0.5);
             } else if (finalScores[0] > finalScores[1]) {
                 players.get(0).increaseWins(1);
-                System.out.println(playes.get(0).getName() + " Wins!");
+                System.out.println(players.get(0).getName() + " Wins!");
             } else {
                 players.get(1).increaseWins(1);
-                System.out.println(playes.get(1).getName() + " Wins!");
+                System.out.println(players.get(1).getName() + " Wins!");
             }
 
             // Print scores
