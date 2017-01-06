@@ -1,3 +1,4 @@
+// The dealer is the main way to interact with the deck
 public class Dealer {
     private Deck deck;
 
@@ -5,9 +6,15 @@ public class Dealer {
         this.deck = deck;
     }
 
+    // Gives a card to a certain player
     public Card giveCard(Player player) {
-        nextCard = deck.draw();
+        Card nextCard = deck.draw();
         player.giveCard(nextCard);
         return nextCard;
+    }
+
+    // Reset the deck to its original state
+    public void reset() {
+        deck.reset();
     }
 }

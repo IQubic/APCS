@@ -1,3 +1,4 @@
+// A card has a suit, a rank, and a point value
 public class Card {
     private int rank;
     private String suit;
@@ -9,10 +10,13 @@ public class Card {
         this.points = points;
     }
 
+    // Gets the point value of a card
+    // Returns a number 1 - 10
     public int getPoints() {
         return points;
     }
 
+    // The toString method takes the rank 1 - 13 and turns it into the proper word
     public String toString() {
         String rank = Integer.toString(this.rank);
         if (this.rank == 1) {
@@ -24,5 +28,6 @@ public class Card {
         } else if (this.rank == 13) {
             rank = "King";
         }
+        return rank + " of " + suit;
     }
 }
