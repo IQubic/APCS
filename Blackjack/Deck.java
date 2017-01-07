@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Deck {
     // cardsInDeck stores the cards that have not been drawn
