@@ -43,6 +43,14 @@ public class Deck {
     }
 
     public void shuffle() {
-        Collections.shuffle(cardsInDeck);
+        for (int i = cardsInDeck.size(); i > 1; i--) {
+            int cardIndex = (int) (Math.random() * i);
+            cardsInDeck.add(cardsInDeck.get(cardIndex));
+            cardsInDeck.remove(cardIndex);
+        }
+    }
+
+    public ArrayList<Card> getCardsInDeck() {
+        return cardsInDeck;
     }
 }
