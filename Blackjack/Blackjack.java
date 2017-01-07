@@ -73,9 +73,9 @@ public class Blackjack {
                 // Save the score
                 if (hitOrBust == 'h') {
                     System.out.println("Bust!");
-                    finalScores[currentPlayerNumber] = -1;
+                    finalScores[playerOrder[currentPlayerNumber]] = -1;
                 } else {
-                    finalScores[currentPlayerNumber] = currentHandScore;
+                    finalScores[playerOrder[currentPlayerNumber]] = currentHandScore;
                 }
 
                 if (currentPlayerNumber == 0) {
@@ -116,6 +116,8 @@ public class Blackjack {
                 dealer.reset();
                 System.out.println("==============");
                 selectPlayerOrder(playerOrder);
+                finalScores[0] = 0;
+                finalScores[1] = 0;
             }
         } while (playAgain == 'y');
     }
