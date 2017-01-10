@@ -3,3 +3,9 @@
 
 # Ignore image files
 *.jpg
+*.db
+*.gif
+
+# Ignore web files
+*.html
+*.css
