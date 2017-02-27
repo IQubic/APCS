@@ -35,13 +35,13 @@ public class Plurals {
             return dropLastNChars(word, 1) + "ies";
          }
       } else if (ending.equals("ch") || ending.equals("sh") || ending.equals("ss") || word.endsWith("s") || word.endsWith("x")) {
-      	 return word + "es";
+          return word + "es";
       } else if (word.endsWith("f")) {
-      	 return dropLastNChars(word, 1) + "ves";
+          return dropLastNChars(word, 1) + "ves";
       } else if (word.endsWith("fe")) {
-      	 return dropLastNChars(word, 2) + "ves";
+          return dropLastNChars(word, 2) + "ves";
       } else {
-      	 return word + "s";
+          return word + "s";
       }
    }
 
