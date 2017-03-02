@@ -20,9 +20,10 @@ public class NumberBinarySearch {
         // Set index variables
         int left = 0;
         int right = arr.length;
-        int middle = (left + right) / 2;
 
         while (true) {
+            int middle = (left + right) / 2;
+
             // Print out the current search parameters
             System.out.println("Left: " + left + ", Middle: " + middle + ", Right: " + right);
             System.out.println("Left value: " + arr[left] + ", Middle value: " + arr[middle] + ", Right value: " + arr[right]);
