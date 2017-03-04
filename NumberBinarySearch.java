@@ -2,8 +2,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class NumberBinarySearch {
-    private static final int MAXINT = 100;
-    private static final int ARRAY_SIZE = 100;
+    private static final int MAXINT = 100000;
+    private static final int ARRAY_SIZE = 100000;
     private static Random rand = new Random();
 
     public static void main(String[] args) {
@@ -24,10 +24,6 @@ public class NumberBinarySearch {
         while (true) {
             int middle = (left + right) / 2;
 
-            // Print out the current search parameters
-            System.out.println("Left: " + left + ", Middle: " + middle + ", Right: " + right);
-            System.out.println("Left value: " + arr[left] + ", Middle value: " + arr[middle] + ", Right value: " + arr[right]);
-
             // Does midValue = target? If so, return
             if (arr[middle] == target) {
                 return middle;
@@ -42,6 +38,9 @@ public class NumberBinarySearch {
             if (arr[middle] < target) {
                 // Keep right half
                 left = middle;
+            } else {
+                // Keep left half
+                right = middle;
             }
         }
 
