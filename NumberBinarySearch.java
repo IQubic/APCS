@@ -4,6 +4,7 @@ import java.util.Random;
 public class NumberBinarySearch {
     private static final int MAXINT = 100000;
     private static final int ARRAY_SIZE = 100000;
+    private static int comparisons = 0;
     private static Random rand = new Random();
 
     public static void main(String[] args) {
@@ -12,35 +13,26 @@ public class NumberBinarySearch {
         // Is a number in the array?
         int target = rand.nextInt(MAXINT);
         System.out.println("Searching for: " + target);
-        System.out.println(indexOf(r, target));
+        System.out.println(indexOf(r, target) + " was returned in " + comparisons + " comparisons");
     }
 
 
     private static int indexOf(int[] arr, int target) {
         // Set index variables
         int left = 0;
-        int right = arr.length;
+        int right = arr.length - 1;
 
-        while (true) {
-            int middle = (left + right) / 2;
-
-            // Does midValue = target? If so, return
-            if (arr[middle] == target) {
-                return middle;
-            }
-
-            // Check if we are done searching
-            if (right - left == 1) {
-                break;
-            }
-
-            // Update index variables
-            if (arr[middle] < target) {
-                // Keep right half
-                left = middle;
+        while (left <= right) {
+            comparisons++;
+            int mid = (left + right) / 2;
+            if (arr[mid] > target) {
+                // Keep Left Half
+                right = mid - 1;
+            } else if (arr[mid] < target) {
+                // Keep Right Half
+                left = mid + 1;
             } else {
-                // Keep left half
-                right = middle;
+                return mid;
             }
         }
 
