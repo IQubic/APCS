@@ -13,7 +13,7 @@ public class NumberBinarySearch {
         // Is a number in the array?
         int target = rand.nextInt(MAXINT);
         System.out.println("Searching for: " + target);
-        System.out.println(indexOf(r, target) + " was returned in " + comparisons + " comparisons");
+        System.out.println(indexOf(r, target));
     }
 
 
@@ -33,7 +33,6 @@ public class NumberBinarySearch {
             } else {
                 return mid;
             }
-            comparisons++;
         }
 
         // Target not found
