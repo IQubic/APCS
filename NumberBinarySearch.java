@@ -23,7 +23,6 @@ public class NumberBinarySearch {
         int right = arr.length - 1;
 
         while (left <= right) {
-            comparisons++;
             int mid = (left + right) / 2;
             if (arr[mid] > target) {
                 // Keep Left Half
@@ -34,6 +33,7 @@ public class NumberBinarySearch {
             } else {
                 return mid;
             }
+            comparisons++;
         }
 
         // Target not found
