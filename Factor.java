@@ -9,7 +9,7 @@ public class Factor {
     public static ArrayList<Long> factor(long n) throws IllegalArgumentException {
         ArrayList<Long> factors = new ArrayList<>();
         long divisor = 1;
-        if (n == 0) {
+        if (n <= 0) {
             throw new IllegalArgumentException();
         }
         if (n == 1) {
