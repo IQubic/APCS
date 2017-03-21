@@ -2,45 +2,34 @@ import java.util.ArrayList;
 
 public class Factor {
     public static void main(String args[]) {
-        Long arg = Long.parseLong(args[0]);
+        int arg = Integer.parseInt(args[0]);
         System.out.println(arg + " " + factor(arg));
     }
 
-    public static ArrayList<Long> factor(long n) throws IllegalArgumentException {
-        ArrayList<Long> factors = new ArrayList<>();
-        long divisor = 1;
+    public static ArrayList<Integer> factor(int n) throws IllegalArgumentException {
+        ArrayList<Integer> factors = new ArrayList<>();
         if (n <= 0) {
             throw new IllegalArgumentException();
         }
         if (n == 1) {
-            factors.add((long) 1);
+            factors.add(1);
             return factors;
         }
 
-        // Base Case
-        if (isPrime(n)) {
-            factors.add(n);
+        if (n % 2 == 0) {
+            factors.add(2);
+            factors.addAll(factor(n / 2));
             return factors;
         }
 
-        // Recursive stuff
-        for (long i = 2; i <= Math.sqrt(n); i++) {
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
             if (n % i == 0) {
-                divisor = n / i;
                 factors.add(i);
-                break;
+                factors.addAll(factor(n / i));
+                return factors;
             }
         }
-        factors.addAll(factor(divisor));
+        factors.add(n);
         return factors;
-    }
-
-    public static boolean isPrime(double n) {
-        for (int i = 2; i <= Math.sqrt(n); i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
