@@ -28,13 +28,10 @@ public class QuickSort {
             // Moves the pivot forward 1 element,
             // and brings a new element into the compIndex
             } else {
-                cells.add(endIndex + 1, cells.remove(compIndex));
+                moveToEndOfSublist(cells, compIndex, endIndex);
                 pivotIndex--;
             }
         }
-
-        System.out.println(startIndex + " " + pivotIndex + " " + endIndex);
-        System.out.println(cells);
 
         // Sort the left if needed
         if (pivotIndex - startIndex > 1) {
@@ -43,6 +40,14 @@ public class QuickSort {
         // Sort the right if needed
         if (endIndex - pivotIndex > 1) {
             Quicksort(cells, pivotIndex + 1, endIndex, factor);
+        }
+    }
+
+    private static void moveToEndOfSublist(List<Integer> cells, int elementIndex, int endOfSublist) {
+        if (endOfSublist == cells.size() - 1) {
+            cells.add(cells.remove(elementIndex));
+        } else {
+            cells.add(endOfSublist, cells.remove(elementIndex));
         }
     }
 }
