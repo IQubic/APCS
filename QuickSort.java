@@ -4,17 +4,17 @@ import java.util.stream.Collectors;
 public class QuickSort {
     public static void main(String args[]) {
         List<Integer> nums = Arrays.stream(args).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
-        Quicksort(nums, 0, nums.size() - 1, -1);
+        quicksort(nums, 0, nums.size() - 1, -1);
         System.out.println(nums);
     }
 
-    private static void Quicksort(List<Integer> cells, int startIndex, int endIndex, int factor) {
+    private static void quicksort(List<Integer> cells, int startIndex, int endIndex, int factor) {
         // Partitioning the array
 
+        // Keep track of which elements we've examined
+        int compIndex = startIndex;
         // Use the last element as the pivot
         int pivotIndex = endIndex;
-        // Keep track of how many elements we've examined
-        int compIndex = 0;
 
         while (compIndex < pivotIndex) {
             // compCell comes before the pivot
@@ -35,11 +35,11 @@ public class QuickSort {
 
         // Sort the left if needed
         if (pivotIndex - startIndex > 1) {
-            Quicksort(cells, startIndex, pivotIndex - 1, factor);
+            quicksort(cells, startIndex, pivotIndex - 1, factor);
         }
         // Sort the right if needed
         if (endIndex - pivotIndex > 1) {
-            Quicksort(cells, pivotIndex + 1, endIndex, factor);
+            quicksort(cells, pivotIndex + 1, endIndex, factor);
         }
     }
 
